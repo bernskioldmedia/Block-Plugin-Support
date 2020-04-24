@@ -2,12 +2,23 @@
   "name": "bernskioldmedia/block-plugin-support",
   "description": "A reusable way of adding block support to a WordPress plugin.",
   "type": "library",
-  "require": {},
+  "require": {
+	"php": "^7.1"
+  },
   "license": "MIT",
   "authors": [
+	{
+	  "name": "Bernskiold Media",
+	  "email": "info@bernskioldmedia.com"
+	},
 	{
 	  "name": "Erik Bernskiold",
 	  "email": "erik@bernskioldmedia.com"
 	}
-  ]
+  ],
+  "autoload": {
+	"psr-4": {
+	  "BernskioldMedia\\WP\\Block_Plugin_Support\\": "src/"
+	}
+  }
 }
