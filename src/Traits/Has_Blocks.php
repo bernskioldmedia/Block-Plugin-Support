@@ -92,14 +92,14 @@ trait Has_Blocks {
 
 		foreach ( $this->get_blocks() as $block_name => $args ) {
 
-			wp_enqueue_script( 'bm-block-' . $block_name, self::get_url( 'dist/' . $block_name . '.js' ), [
+			wp_enqueue_script( $this->block_prefix . '-' . $block_name, self::get_url( 'dist/' . $block_name . '.js' ), [
 				'wp-blocks',
 				'wp-element',
 				'wp-i18n',
 				'wp-editor',
 			], self::get_version(), true );
 
-			wp_set_script_translations( 'bm-block-' . $block_name, 'bm-block-' . $block_name, self::get_path( 'languages/' ) );
+			wp_set_script_translations( $this->block_prefix . '-' . $block_name, $this->block_prefix . '-' . $block_name, self::get_path( 'languages/' ) );
 
 		}
 
