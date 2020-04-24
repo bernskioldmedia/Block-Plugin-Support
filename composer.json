@@ -1,0 +1,13 @@
+{
+  "name": "bernskioldmedia/block-plugin-support",
+  "description": "A reusable way of adding block support to a WordPress plugin.",
+  "type": "library",
+  "require": {},
+  "license": "MIT",
+  "authors": [
+	{
+	  "name": "Erik Bernskiold",
+	  "email": "erik@bernskioldmedia.com"
+	}
+  ]
+}
