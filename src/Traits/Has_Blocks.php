@@ -142,7 +142,7 @@ trait Has_Blocks {
 	 *
 	 * @return string
 	 */
-	abstract public function get_version();
+	abstract public static function get_version();
 
 	/**
 	 * Get the URL to the plugin folder, or the specified
@@ -152,7 +152,7 @@ trait Has_Blocks {
 	 *
 	 * @return string
 	 */
-	abstract public function get_url( $file = '' );
+	abstract public static function get_url( $file = '' );
 
 	/**
 	 * Get the path to the plugin folder, or the specified
@@ -162,6 +162,6 @@ trait Has_Blocks {
 	 *
 	 * @return string
 	 */
-	abstract public function get_path( $file = '' );
+	abstract public static function get_path( $file = '' );
 
 }
