@@ -2,8 +2,6 @@
 
 namespace BernskioldMedia\WP\Block_Plugin_Support\Traits;
 
-use ReflectionException;
-
 /**
  * Trait Has_Blocks
  *
@@ -29,57 +27,68 @@ trait Has_Blocks {
 	protected $blocks = [];
 
 	/**
-	 * An array of components class names that are required
-	 * by the blocks.
+	 * Place the logic where you add blocks in here.
 	 *
-	 * @var array
+	 * @return mixed
 	 */
-	protected $block_components = [];
-
 	abstract public function blocks();
 
-	public function load_blocks() {
+	/**
+	 * Run this function when you initialize the plugin
+	 * so that blocks are registered.
+	 *
+	 * @param  string  $prefix
+	 */
+	protected function load_blocks( $prefix = '' ) {
 
 		if ( ! $this->block_prefix ) {
-			return;
+			$this->block_prefix = $prefix;
 		}
 
-		$this->register_blocks();
-		$this->load_components();
-		$this->load_php_blocks();
-	}
-
-	public function set_block_prefix( $prefix ) {
-		$this->block_prefix = $prefix;
+		add_action( 'init', [ $this, 'register_blocks' ] );
+		add_action( 'render_block_data', [ $this, 'add_block_name' ], 10, 1 );
+		add_action( 'enqueue_block_editor_assets', [ $this, 'load_block_assets' ] );
 
 	}
 
+	/**
+	 * Add a block.
+	 *
+	 * @param  string  $name
+	 * @param  array   $args
+	 */
 	public function add_block( $name, $args = [] ) {
 		$this->blocks = array_merge( $this->blocks, [
 			$name => $args,
 		] );
 	}
 
-	public function add_block_if( $plugin_file_name, $name, $args = [] ) {
-
-		if ( ! $this->is_plugin_active( $plugin_file_name ) ) {
-			return $this;
+	/**
+	 * Ad a block given that a class exists.
+	 *
+	 * @param  string  $class
+	 * @param  string  $name
+	 * @param  array   $args
+	 */
+	public function add_block_if( $class, $name, $args = [] ) {
+		if ( class_exists( $class ) ) {
+			$this->add_block( $name, $args );
 		}
-
-		$this->add_block( $name, $args );
 	}
 
+	/**
+	 * Remove a block.
+	 *
+	 * @param  string  $name
+	 */
 	public function remove_block( $name ) {
 		unset( $this->blocks[ $name ] );
 	}
 
-	public function block_components( $components ): self {
-		$this->block_components = $components;
-
-		return $this;
-	}
-
-	public function load_assets() {
+	/**
+	 * Load all block assets.
+	 */
+	public function load_block_assets() {
 
 		foreach ( $this->get_blocks() as $block_name => $args ) {
 
@@ -117,55 +126,6 @@ trait Has_Blocks {
 		$block['attrs']['_name'] = $block['blockName'];
 
 		return $block;
-	}
-
-	/**
-	 * Load Components
-	 */
-	protected function load_components() {
-
-		foreach ( $this->components as $component ) {
-			try {
-				$class = new \ReflectionClass( $component );
-				require_once $class->getFileName();
-			} catch ( ReflectionException $e ) {
-				error_log( $e->getMessage() );
-			}
-
-		}
-
-	}
-
-	protected function load_php_blocks() {
-
-		foreach ( $this->get_blocks() as $block => $args ) {
-
-			if ( ! isset( $args['render_callback'] ) ) {
-				continue;
-			}
-
-			try {
-				$class = new \ReflectionClass( $args['render_callback'][0] );
-				require_once $class->getFileName();
-			} catch ( ReflectionException $e ) {
-				error_log( $e->getMessage() );
-			}
-
-		}
-
-	}
-
-	/**
-	 * Check if a plugin is active.
-	 *
-	 * @param  string  $plugin_file
-	 *
-	 * @return bool
-	 */
-	protected function is_plugin_active( $plugin_file ): bool {
-		$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
-
-		return in_array( $plugin_file, $active_plugins, true );
 	}
 
 	/**
