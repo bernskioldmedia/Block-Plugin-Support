@@ -45,8 +45,7 @@ trait Has_Blocks {
 			$this->block_prefix = $prefix;
 		}
 
-		$this->blocks();
-
+		add_action( 'plugins_loaded', [ $this, 'blocks' ] );
 		add_action( 'init', [ $this, 'register_blocks' ] );
 		add_action( 'render_block_data', [ $this, 'add_block_name' ], 10, 1 );
 		add_action( 'enqueue_block_editor_assets', [ $this, 'load_block_assets' ] );
