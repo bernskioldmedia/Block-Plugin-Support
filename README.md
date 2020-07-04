@@ -48,6 +48,19 @@ class My_Plugin {
 }
 ```
 
+### Customize Loading Priority
+We run our block enqueue fairly late by default at a 999 priority on `enqueue_block_editor_assets`. To customize this order,
+you may override the following static variable on the class:
+
+```
+/**
+ * The priority of the block editor asset enqueue hook.
+ *
+ * @var integer
+ */
+protected static $block_assets_load_priority = 999;
+```
+
 # Required Folder Structure
 The trait assumes the following folder structure:
 
