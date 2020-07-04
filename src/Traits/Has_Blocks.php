@@ -27,6 +27,13 @@ trait Has_Blocks {
 	protected $blocks = [];
 
 	/**
+	 * The priority of the block editor asset enqueue hook.
+	 *
+	 * @var integer
+	 */
+	protected static $block_assets_load_priority = 999;
+
+	/**
 	 * Place the logic where you add blocks in here.
 	 *
 	 * @return mixed
@@ -48,7 +55,7 @@ trait Has_Blocks {
 		add_action( 'plugins_loaded', [ $this, 'blocks' ] );
 		add_action( 'init', [ $this, 'register_blocks' ] );
 		add_action( 'render_block_data', [ $this, 'add_block_name' ], 10, 1 );
-		add_action( 'enqueue_block_editor_assets', [ $this, 'load_block_assets' ] );
+		add_action( 'enqueue_block_editor_assets', [ $this, 'load_block_assets' ], self::$block_assets_load_priority );
 
 	}
 
