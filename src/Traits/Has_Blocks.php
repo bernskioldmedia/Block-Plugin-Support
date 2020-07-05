@@ -41,6 +41,7 @@ trait Has_Blocks {
 	 */
 	protected static $block_dependencies = [
 		'wp-blocks',
+		'wp-components',
 		'wp-element',
 		'wp-i18n',
 		'wp-block-editor',
