@@ -34,6 +34,19 @@ trait Has_Blocks {
 	protected static $block_assets_load_priority = 999;
 
 	/**
+	 * Packages that are loaded as dependencies for the blocks globally,
+	 * unless the block specifies its own dependency list.
+	 *
+	 * @var string[]
+	 */
+	protected static $block_dependencies = [
+		'wp-blocks',
+		'wp-element',
+		'wp-i18n',
+		'wp-block-editor',
+	];
+
+	/**
 	 * Place the logic where you add blocks in here.
 	 *
 	 * @return mixed
@@ -100,14 +113,15 @@ trait Has_Blocks {
 
 		foreach ( $this->get_blocks() as $block_name => $args ) {
 
-			wp_enqueue_script( $this->block_prefix . '-' . $block_name, self::get_url( 'dist/' . $block_name . '.js' ), [
-				'wp-blocks',
-				'wp-element',
-				'wp-i18n',
-				'wp-editor',
-			], self::get_version(), true );
+			if ( isset( $args['script_dependencies'] ) ) {
+				$dependencies = $args['script_dependencies'];
+			} else {
+				$dependencies = self::$block_dependencies;
+			}
 
-			wp_set_script_translations( $this->block_prefix . '-' . $block_name, $this->block_prefix . '-' . $block_name, self::get_path( 'languages/' ) );
+			wp_enqueue_script( $this->block_prefix . '-' . $block_name, self::get_url( 'dist/' . $block_name . '.js' ), $dependencies, self::get_version(), false );
+
+			wp_set_script_translations( $this->block_prefix . '-' . $block_name, self::get_textdomain(), self::get_path( 'languages/' ) );
 
 		}
 
@@ -171,5 +185,12 @@ trait Has_Blocks {
 	 * @return string
 	 */
 	abstract public static function get_path( $file = '' );
+
+	/**
+	 * Get Plugin Textdomain
+	 *
+	 * @return string
+	 */
+	abstract public static function get_textdomain();
 
 }
