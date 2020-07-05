@@ -61,6 +61,40 @@ you may override the following static variable on the class:
 protected static $block_assets_load_priority = 999;
 ```
 
+### Customize Dependencies
+Each block requires a list of script dependencies when loaded. These are typically the core WordPress block library scripts,
+or any other script dependency that we need.
+
+To customize this, add a `dependencies => []` section to the block arguments array when adding the block. A standard block would then look like this:
+
+```
+$this->add_block( 'my-js-block-name', [
+    'dependencies' => [
+        'wp-i18n'
+    ],
+] );
+```
+
+If you do not set dependencies for a specific block, the global dependency list will be used.
+
+By default, the global dependency list contains a most-used set of WP scripts. To modify it, you can ovverride the `protected static $block_dependencies = []` class property.
+
+```
+/**
+ * Packages that are loaded as dependencies for the blocks globally,
+ * unless the block specifies its own dependency list.
+ *
+ * @var string[]
+ */
+protected static $block_dependencies = [
+	'wp-blocks',
+	'wp-components',
+	'wp-element',
+	'wp-i18n',
+	'wp-block-editor',
+];
+```
+
 # Required Folder Structure
 The trait assumes the following folder structure:
 
@@ -69,8 +103,9 @@ The trait assumes the following folder structure:
 `languages/` is the location of the translation files. The handle and domain are both set to `{$block_prefix}-{$block_name}`.
 
 # Required Methods
-The trait relies on three methods to be implemented, outside of `blocks()`. These are:
+The trait relies on four methods to be implemented, outside of `blocks()`. These are:
 
 - `get_version()` that should return a string of the current plugin version. Used for versioning the blocks.
 - `get_url()` should return the URL to the plugin directory.
 - `get_path()` should return the path to the plugin directory.
+- `get_textdomain()` should return the plugin textdomain.
