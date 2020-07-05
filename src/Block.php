@@ -44,11 +44,7 @@ abstract class Block {
 	 * @return mixed|null
 	 */
 	protected static function get_attr_value( $attributes, $name ) {
-		if ( isset( $attributes[ $name ] ) ) {
-			return $attributes[ $name ];
-		} else {
-			return null;
-		}
+		return $attributes[ $name ] ?? null;
 	}
 
 	/**
