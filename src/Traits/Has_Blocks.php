@@ -34,6 +34,14 @@ trait Has_Blocks {
 	protected static $block_assets_load_priority = 999;
 
 	/**
+	 * Control the priority of when this plugin hooks into
+	 * the init and plugins_loaded hooks.
+	 *
+	 * @var integer
+	 */
+	protected static $load_priority = 99;
+
+	/**
 	 * Packages that are loaded as dependencies for the blocks globally,
 	 * unless the block specifies its own dependency list.
 	 *
@@ -66,8 +74,8 @@ trait Has_Blocks {
 			$this->block_prefix = $prefix;
 		}
 
-		add_action( 'plugins_loaded', [ $this, 'blocks' ] );
-		add_action( 'init', [ $this, 'register_blocks' ] );
+		add_action( 'plugins_loaded', [ $this, 'blocks' ], self::$load_priority );
+		add_action( 'init', [ $this, 'register_blocks' ], self::$load_priority );
 		add_action( 'render_block_data', [ $this, 'add_block_name' ], 10, 1 );
 		add_action( 'enqueue_block_editor_assets', [ $this, 'load_block_assets' ], self::$block_assets_load_priority );
 
