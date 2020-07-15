@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.1.1] - 2020-07-15
+
+### Added
+- Class variable in our Has_Blocks trait to control the load order.
+
+### Changed
+- Load order on init and plugins_loaded from default (10) to later (99) by default to make sure other plugins are loaded first.
+
 ## [1.1.0] - 2020-07-05
 
 ### Added
