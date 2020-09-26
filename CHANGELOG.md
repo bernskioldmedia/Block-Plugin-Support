@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.1.2] - 2020-09-26
+
+### Changed
+- Switched Trait properties to functions with fallbacks.
+
 ## [1.1.1] - 2020-07-15
 
 ### Added

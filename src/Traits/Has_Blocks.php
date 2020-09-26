@@ -27,27 +27,12 @@ trait Has_Blocks {
 	protected $blocks = [];
 
 	/**
-	 * The priority of the block editor asset enqueue hook.
-	 *
-	 * @var integer
-	 */
-	protected static $block_assets_load_priority = 999;
-
-	/**
-	 * Control the priority of when this plugin hooks into
-	 * the init and plugins_loaded hooks.
-	 *
-	 * @var integer
-	 */
-	protected static $load_priority = 99;
-
-	/**
 	 * Packages that are loaded as dependencies for the blocks globally,
 	 * unless the block specifies its own dependency list.
 	 *
 	 * @var string[]
 	 */
-	protected static $block_dependencies = [
+	protected static $default_block_dependencies = [
 		'wp-blocks',
 		'wp-components',
 		'wp-element',
@@ -74,10 +59,10 @@ trait Has_Blocks {
 			$this->block_prefix = $prefix;
 		}
 
-		add_action( 'plugins_loaded', [ $this, 'blocks' ], self::$load_priority );
-		add_action( 'init', [ $this, 'register_blocks' ], self::$load_priority );
+		add_action( 'plugins_loaded', [ $this, 'blocks' ], static::get_load_priority() );
+		add_action( 'init', [ $this, 'register_blocks' ], static::get_load_priority() );
 		add_action( 'render_block_data', [ $this, 'add_block_name' ], 10, 1 );
-		add_action( 'enqueue_block_editor_assets', [ $this, 'load_block_assets' ], self::$block_assets_load_priority );
+		add_action( 'enqueue_block_editor_assets', [ $this, 'load_block_assets' ], static::get_block_assets_load_priority() );
 
 	}
 
@@ -119,21 +104,12 @@ trait Has_Blocks {
 	 * Load all block assets.
 	 */
 	public function load_block_assets() {
-
 		foreach ( $this->get_blocks() as $block_name => $args ) {
+			$dependencies = $args['script_dependencies'] ?? static::get_block_dependencies();
 
-			if ( isset( $args['script_dependencies'] ) ) {
-				$dependencies = $args['script_dependencies'];
-			} else {
-				$dependencies = self::$block_dependencies;
-			}
-
-			wp_enqueue_script( $this->block_prefix . '-' . $block_name, self::get_url( 'dist/' . $block_name . '.js' ), $dependencies, self::get_version(), false );
-
-			wp_set_script_translations( $this->block_prefix . '-' . $block_name, self::get_textdomain(), self::get_path( 'languages/' ) );
-
+			wp_enqueue_script( $this->block_prefix . '-' . $block_name, static::get_url( 'dist/' . $block_name . '.js' ), $dependencies, static::get_version(), false );
+			wp_set_script_translations( $this->block_prefix . '-' . $block_name, static::get_textdomain(), static::get_path( 'languages/' ) );
 		}
-
 	}
 
 	/**
@@ -166,6 +142,46 @@ trait Has_Blocks {
 	 */
 	public function get_blocks(): array {
 		return $this->blocks;
+	}
+
+	/**
+	 * Control the priority of when this plugin hooks into
+	 * the init and plugins_loaded hooks.
+	 *
+	 * @return integer
+	 **/
+	public static function get_load_priority(): int {
+		if ( property_exists( static::class, 'load_priority' ) ) {
+			return static::$load_priority;
+		}
+
+		return 99;
+	}
+
+	/**
+	 * The priority of the block editor asset enqueue hook.
+	 *
+	 * @return integer
+	 */
+	public static function get_block_assets_load_priority(): int {
+		if ( property_exists( static::class, 'block_assets_load_priority' ) ) {
+			return static::$block_assets_load_priority;
+		}
+
+		return 99;
+	}
+
+	/**
+	 * Get the default block dependencies.
+	 *
+	 * @return array
+	 */
+	public static function get_block_dependencies(): array {
+		if ( property_exists( static::class, 'block_dependencies' ) ) {
+			return array_merge( static::$block_dependencies, static::$default_block_dependencies );
+		}
+
+		return static::$default_block_dependencies;
 	}
 
 	/**
