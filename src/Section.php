@@ -3,9 +3,7 @@
  * Section
  */
 
-namespace BernskioldMedia\WP\BlockLibrary\Components\Section;
-
-use BernskioldMedia\WP\Block_Plugin_Support\Block;
+namespace BernskioldMedia\WP\Block_Plugin_Support;
 
 /**
  * Class Section
@@ -248,7 +246,7 @@ abstract class Section extends Block {
 			return;
 		}
 
-		$classes   = [ 'Section-header' ];
+		$classes   = [ 'section-header' ];
 		$classes[] = 'is-style-' . static::get_attr_value( $attributes, 'sectionHeaderStyle' );
 		$classes   = join( ' ', $classes );
 
@@ -304,7 +302,7 @@ abstract class Section extends Block {
 			return;
 		}
 
-		$classes   = [ 'Section-footer' ];
+		$classes   = [ 'section-footer' ];
 		$classes[] = 'is-' . static::get_attr_value( $attributes, 'sectionFooterAlignment' ) . '-aligned';
 		$classes   = join( ' ', $classes );
 
