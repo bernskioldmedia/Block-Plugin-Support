@@ -19,6 +19,10 @@ abstract class Section extends Block {
 	 * @var array
 	 */
 	protected static $section_attributes = [
+		'align'                 => [
+			'type'    => 'string',
+			'default' => 'full',
+		],
 		'anchor'                    => [
 			'type' => 'string',
 		],
