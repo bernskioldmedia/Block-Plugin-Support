@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.2.1] - 2020-12-29
+
+### Fixed
+
+-   Alignment classes wouldn't be properly applied on sections, this is fixed.
+-   For sections, add the full alignment attribute as default.
+
 ## [1.2.0] - 2020-12-14
 
 ### Added
