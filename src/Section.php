@@ -176,6 +176,10 @@ abstract class Section extends Block {
 			$classes[] = 'has-' . $attributes['sectionVerticalSpacing'] . '-vspacing';
 		}
 
+		if ( isset( $attributes['align'] ) ) {
+			$classes[] = 'align' . $attributes['align'];
+		}
+
 		$classes = implode( ' ', $classes );
 
 		/**
