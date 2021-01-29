@@ -146,7 +146,7 @@ abstract class Section extends Block {
 	 *
 	 * @return bool
 	 */
-	protected static function is_content_shown(): bool {
+	protected static function is_content_shown( $attributes ): bool {
 		return true;
 	}
 
@@ -162,7 +162,7 @@ abstract class Section extends Block {
 	 */
 	public static function render( $attributes ) {
 
-		if( false === static::is_content_shown() ) {
+		if( false === static::is_content_shown( $attributes ) ) {
 			return '';
 		}
 
