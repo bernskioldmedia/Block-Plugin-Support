@@ -167,6 +167,11 @@ abstract class Section extends Block {
 		}
 
 		$classes = [];
+		$args = [];
+
+		if ( isset( $attributes['anchor'] ) ) {
+			$args['id'] = esc_attr( $attributes['anchor'] );
+		}
 
 		if ( isset( $attributes['align'] ) ) {
 			$classes[] = 'align' . $attributes['align'];
@@ -177,11 +182,8 @@ abstract class Section extends Block {
 		}
 
 		if ( ! static::get_attr_value( $attributes, 'sectionWrapperEnabled' ) ) {
-			$output = '';
-
-			$wrapper_attributes = get_block_wrapper_attributes([
-				'class' => implode( ' ', $classes )
-			]);
+			$args['class'] = implode( ' ', $classes );
+			$wrapper_attributes = get_block_wrapper_attributes( $args );
 
 			ob_start(); ?>
 			<div <?php echo $wrapper_attributes; ?>>
@@ -220,8 +222,6 @@ abstract class Section extends Block {
 			$classes[] = 'has-' . $attributes['sectionVerticalSpacing'] . '-vspacing';
 		}
 
-		$classes = implode( ' ', $classes );
-
 		/**
 		 * Set up the Section styles.
 		 */
@@ -233,16 +233,10 @@ abstract class Section extends Block {
 			$styles[] = 'background-position: ' . static::focalpoint_to_background_position( $attributes['backgroundImageFocalPoint'] ) . ';';
 		}
 
-		$styles = implode( ' ', $styles );
-
 		$args = [
-			'class' => $classes,
-			'style' => $styles,
+			'class' => implode( ' ', $classes ),
+			'style' => implode( ' ', $styles ),
 		];
-
-		if ( isset( $attributes['anchor'] ) ) {
-			$args['id'] = esc_attr( $attributes['anchor'] );
-		}
 
 		$wrapper_attributes = get_block_wrapper_attributes( $args );
 
