@@ -159,6 +159,9 @@ abstract class Section extends Block {
 	 */
 	public static function render( $attributes ) {
 
+		var_dump(static::get_attr_value( $attributes, 'sectionWrapperEnabled' ));
+		die;
+
 		if( ! static::$show_section ) {
 			return '';
 		}
