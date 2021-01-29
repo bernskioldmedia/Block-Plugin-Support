@@ -58,20 +58,4 @@ abstract class Block {
 	 * @return string
 	 */
 	abstract public static function render( $attributes );
-
-	/**
-	 * Mimic the default JS wp block classname based on the
-	 * name of the block.
-	 *
-	 * @param  array  $attributes
-	 *
-	 * @return mixed|string
-	 */
-	protected static function get_block_class_name( $attributes ) {
-		$class_name = str_replace( '/', '-', $attributes['_name'] );
-		$class_name = "wp-block-$class_name";
-
-		return $class_name;
-	}
-
 }
