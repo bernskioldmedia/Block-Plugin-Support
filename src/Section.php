@@ -13,14 +13,6 @@ namespace BernskioldMedia\WP\Block_Plugin_Support;
 abstract class Section extends Block {
 
 	/**
-	 * Can be set to false to hide the entire section. Useful for example
-	 * to hide the entire section is no objects are available.
-	 *
-	 * @var bool
-	 */
-	protected static $show_section = true;
-
-	/**
 	 * An array of the "default" Section attributes, both
 	 * for the Section, its header and footer.
 	 *
@@ -148,6 +140,17 @@ abstract class Section extends Block {
 	abstract protected static function content( $attributes );
 
 	/**
+	 * Checks before the rendering starts. If this returns false,
+	 * the block will be hidden. Useful to hide dynamic blocks
+	 * if no content is present, for example.
+	 *
+	 * @return bool
+	 */
+	protected static function is_content_shown(): bool {
+		return true;
+	}
+
+	/**
 	 * The main render function which is used as a callback
 	 * in the class that's extending this, when registering the block.
 	 *
@@ -159,7 +162,7 @@ abstract class Section extends Block {
 	 */
 	public static function render( $attributes ) {
 
-		if( ! static::$show_section ) {
+		if( false === static::is_content_shown() ) {
 			return '';
 		}
 
@@ -240,7 +243,11 @@ abstract class Section extends Block {
 		<section <?php echo $wrapper_attributes; ?>>
 			<?php
 			static::render_section_header( $attributes );
-			static::content( $attributes );
+			?>
+			<div class="section-body">
+				<?php static::content( $attributes ); ?>
+			</div>
+			<?php
 			static::render_section_footer( $attributes );
 			?>
 		</section>
