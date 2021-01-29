@@ -30,10 +30,6 @@ abstract class Section extends Block {
 			'type' => 'boolean',
 			'default' => true,
 		],
-		'backgroundColor'           => [
-			'type'    => 'string',
-			'default' => 'transparent',
-		],
 		'backgroundImageId'         => [
 			'type' => 'string',
 		],
