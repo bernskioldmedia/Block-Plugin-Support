@@ -183,7 +183,7 @@ abstract class Section extends Block {
 
 		if ( ! static::get_attr_value( $attributes, 'sectionWrapperEnabled' ) ) {
 			$args['class'] = implode( ' ', $classes );
-			$wrapper_attributes = get_block_wrapper_attributes( $args );
+			$wrapper_attributes = static::get_block_wrapper_attributes( $attributes, $args );
 
 			ob_start(); ?>
 			<div <?php echo $wrapper_attributes; ?>>

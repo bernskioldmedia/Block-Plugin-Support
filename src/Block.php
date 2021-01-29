@@ -31,6 +31,48 @@ abstract class Block {
 	}
 
 	/**
+	 * This is a wrapper around get_block_wrapper_attributes()
+	 * in core, to fix some of the bugs they've introduced.
+	 * 
+	 * Hopefully we can sunset it in the future with a version check,
+	 * when 5.7 lands...
+	 *
+	 * @return string
+	 */
+	public static function get_block_wrapper_attributes( $attributes, array $args ): string {
+		
+		$background_color = static::get_attr_value( $attributes, 'backgroundColor' );
+		$gradient = static::get_attr_value( $attributes, 'gradient' );
+		$text_color = static::get_attr_value( $attributes, 'textColor' );
+
+		$classes = [];
+
+		if ( $background_color ) {
+			$classes[] = 'has-' . $background_color . '-background-color';
+		}
+
+		if ( $gradient ) {
+			$classes[] = 'has-' . $gradient . '-gradient-background';
+		}
+
+		if( $text_color ) {
+			$classes[] = 'has-' . $text_color . '-color';
+		}
+
+		if($background_color || $gradient) {
+			$classes[] = 'has-background';
+		}
+
+		if ( ! empty( $classes ) && isset( $args['class'] ) ) {
+			$args['class'] .= implode( ' ', $classes );
+		} elseif ( ! empty( $classes ) ) {
+			$args['class'] = implode( ' ', $classes );
+		}
+
+		return get_block_wrapper_attributes( $args );
+	}
+
+	/**
 	 * Get Attribute Value
 	 * Performs checks to see if the attribute is in the list
 	 * of attributes given to the render function.
