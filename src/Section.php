@@ -13,6 +13,14 @@ namespace BernskioldMedia\WP\Block_Plugin_Support;
 abstract class Section extends Block {
 
 	/**
+	 * Can be set to false to hide the entire section. Useful for example
+	 * to hide the entire section is no objects are available.
+	 *
+	 * @var bool
+	 */
+	protected static $show_section = true;
+
+	/**
 	 * An array of the "default" Section attributes, both
 	 * for the Section, its header and footer.
 	 *
@@ -25,6 +33,10 @@ abstract class Section extends Block {
 		],
 		'anchor'                    => [
 			'type' => 'string',
+		],
+		'sectionWrapperEnabled'		=> [
+			'type' => 'boolean',
+			'default' => true,
 		],
 		'backgroundColor'           => [
 			'type'    => 'string',
@@ -147,6 +159,14 @@ abstract class Section extends Block {
 	 */
 	public static function render( $attributes ) {
 
+		if( ! static::$show_section ) {
+			return '';
+		}
+
+		if( ! static::get_attr_value( $attributes, 'sectionWrapperEnabled' ) ) {
+			return '';
+		}
+
 		/**
 		 * Set up the Section classes.
 		 */
@@ -180,10 +200,6 @@ abstract class Section extends Block {
 			$classes[] = 'has-' . $attributes['sectionVerticalSpacing'] . '-vspacing';
 		}
 
-		if ( isset( $attributes['align'] ) ) {
-			$classes[] = 'align' . $attributes['align'];
-		}
-
 		$classes = implode( ' ', $classes );
 
 		/**
@@ -213,20 +229,15 @@ abstract class Section extends Block {
 		ob_start();
 		?>
 		<section <?php echo $wrapper_attributes; ?>>
-
 			<?php
 			static::render_section_header( $attributes );
-
 			static::content( $attributes );
-
 			static::render_section_footer( $attributes );
 			?>
-
 		</section>
 
 		<?php
 		return ob_get_clean();
-
 	}
 
 	/**
