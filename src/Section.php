@@ -166,10 +166,22 @@ abstract class Section extends Block {
 			return '';
 		}
 
-		if( ! static::get_attr_value( $attributes, 'sectionWrapperEnabled' ) ) {
+		$classes = [];
+
+		if ( isset( $attributes['align'] ) ) {
+			$classes[] = 'align' . $attributes['align'];
+		}
+
+		if ( isset( $attributes['displayAsCarousel'] ) && $attributes['displayAsCarousel'] ) {
+			$classes[] = 'has-carousel';
+		}
+
+		if ( ! static::get_attr_value( $attributes, 'sectionWrapperEnabled' ) ) {
 			$output = '';
 
-			$wrapper_attributes = get_block_wrapper_attributes();
+			$wrapper_attributes = get_block_wrapper_attributes([
+				'class' => implode( ' ', $classes )
+			]);
 
 			ob_start(); ?>
 			<div <?php echo $wrapper_attributes; ?>>
@@ -182,7 +194,7 @@ abstract class Section extends Block {
 		/**
 		 * Set up the Section classes.
 		 */
-		$classes = [ 'section' ];
+		$classes[] = 'section';
 
 		if ( isset( $attributes['backgroundImageUrl'] ) ) {
 			$classes[] = 'has-background-image bg-cover';
@@ -190,10 +202,6 @@ abstract class Section extends Block {
 
 		if ( isset( $attributes['isSectionFullHeight'] ) && $attributes['isSectionFullHeight'] ) {
 			$classes[] = 'is-full-height';
-		}
-
-		if ( isset( $attributes['displayAsCarousel'] ) && $attributes['displayAsCarousel'] ) {
-			$classes[] = 'has-carousel';
 		}
 
 		if ( isset( $attributes['sectionHeaderShow'] ) && $attributes['sectionHeaderShow'] ) {
