@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.3.0] - 2021-01-29
+
+### Added
+
+-   Support for disabling section wrappers.
+-   Support for hiding content in a section before render. Useful if no results exist.
+
 ## [1.2.1] - 2020-12-29
 
 ### Fixed
