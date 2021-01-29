@@ -238,7 +238,7 @@ abstract class Section extends Block {
 			'style' => implode( ' ', $styles ),
 		];
 
-		$wrapper_attributes = get_block_wrapper_attributes( $args );
+		$wrapper_attributes = static::get_block_wrapper_attributes( $attributes, $args );
 
 		ob_start();
 		?>

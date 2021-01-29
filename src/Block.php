@@ -40,31 +40,29 @@ abstract class Block {
 	 * @return string
 	 */
 	public static function get_block_wrapper_attributes( $attributes, array $args ): string {
-		
+
 		$background_color = static::get_attr_value( $attributes, 'backgroundColor' );
-		$gradient = static::get_attr_value( $attributes, 'gradient' );
-		$text_color = static::get_attr_value( $attributes, 'textColor' );
+		$gradient         = static::get_attr_value( $attributes, 'gradient' );
+		$text_color       = static::get_attr_value( $attributes, 'textColor' );
 
 		$classes = [];
 
-		if ( $background_color ) {
+		if ( $gradient ) {
+			$classes[] = 'has-' . $gradient . '-gradient-background';
+		} elseif ( $background_color ) {
 			$classes[] = 'has-' . $background_color . '-background-color';
 		}
 
-		if ( $gradient ) {
-			$classes[] = 'has-' . $gradient . '-gradient-background';
-		}
-
-		if( $text_color ) {
+		if ( $text_color ) {
 			$classes[] = 'has-' . $text_color . '-color';
 		}
 
-		if($background_color || $gradient) {
+		if ( $background_color || $gradient ) {
 			$classes[] = 'has-background';
 		}
 
 		if ( ! empty( $classes ) && isset( $args['class'] ) ) {
-			$args['class'] .= implode( ' ', $classes );
+			$args['class'] .= ' ' . implode( ' ', $classes );
 		} elseif ( ! empty( $classes ) ) {
 			$args['class'] = implode( ' ', $classes );
 		}
