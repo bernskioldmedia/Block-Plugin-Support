@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.3.1] - 2021-01-29
+
+## Fixed
+
+-   Pass args down to is_content_shown
+-   Add id="" support for sections.
+
 ## [1.3.0] - 2021-01-29
 
 ### Added
