@@ -159,15 +159,21 @@ abstract class Section extends Block {
 	 */
 	public static function render( $attributes ) {
 
-		var_dump(static::get_attr_value( $attributes, 'sectionWrapperEnabled' ));
-		die;
-
 		if( ! static::$show_section ) {
 			return '';
 		}
 
 		if( ! static::get_attr_value( $attributes, 'sectionWrapperEnabled' ) ) {
-			return '';
+			$output = '';
+
+			$wrapper_attributes = get_block_wrapper_attributes();
+
+			ob_start(); ?>
+			<div <?php echo $wrapper_attributes; ?>>
+				<?php static::content( $attributes ); ?>
+			</div>
+			<?php
+			return ob_get_clean();
 		}
 
 		/**
