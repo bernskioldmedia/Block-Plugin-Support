@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.3.2] - 2021-01-29
+
+## Changed
+
+-   Added support for background colors, gradients and text colors in dynamic blocks until Gutenberg get their act together.
+-   Removed default background color because of conflict with gradient.
+
 ## [1.3.1] - 2021-01-29
 
 ## Fixed
