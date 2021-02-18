@@ -10,6 +10,14 @@ namespace BernskioldMedia\WP\Block_Plugin_Support;
 abstract class Block {
 
 	/**
+	 * By entering the block name here, we can expose a few filters
+	 * that makes customization easier.
+	 *
+	 * @var string
+	 */
+	protected static $name = '';
+
+	/**
 	 * An array of attributes that will be registered with
 	 * the block in PHP.
 	 * Each block that extends this class ought to set the
@@ -27,13 +35,13 @@ abstract class Block {
 	 * @return array
 	 */
 	public static function get_attributes() {
-		return static::$attributes;
+		return apply_filters( 'block_support_' . static::$name . '_attributes', static::$attributes );
 	}
 
 	/**
 	 * This is a wrapper around get_block_wrapper_attributes()
 	 * in core, to fix some of the bugs they've introduced.
-	 * 
+	 *
 	 * Hopefully we can sunset it in the future with a version check,
 	 * when 5.7 lands...
 	 *
@@ -66,6 +74,8 @@ abstract class Block {
 		} elseif ( ! empty( $classes ) ) {
 			$args['class'] = implode( ' ', $classes );
 		}
+
+		$args = apply_filters( 'block_support_' . static::$name . '_wrapper_attributes', $args );
 
 		return get_block_wrapper_attributes( $args );
 	}
