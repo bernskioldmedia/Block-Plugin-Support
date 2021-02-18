@@ -1,4 +1,5 @@
 # Block Plugin Support
+
 We find ourselves increasingly creating a bunch of plugins that add one or more blocks
 to the block editor.
 
@@ -9,6 +10,7 @@ The library consists of a simple trait for making the plugin support blocks and 
 for a base server-side rendered block.
 
 ## Getting started
+
 All you need to do is include the `Has_Blocks` trait in the plugin class, add the loader
 with your custom prefix when initializing the plugin, and finally, add
 the blocks by implementing the `blocks` method.
@@ -49,6 +51,7 @@ class My_Plugin {
 ```
 
 ### Customize Loading Priority
+
 We run our block enqueue fairly late by default at a 999 priority on `enqueue_block_editor_assets`. To customize this order,
 you may override the following static variable on the class:
 
@@ -62,6 +65,7 @@ protected static $block_assets_load_priority = 999;
 ```
 
 ### Customize Dependencies
+
 Each block requires a list of script dependencies when loaded. These are typically the core WordPress block library scripts,
 or any other script dependency that we need.
 
@@ -96,6 +100,7 @@ protected static $block_dependencies = [
 ```
 
 # Required Folder Structure
+
 The trait assumes the following folder structure:
 
 `dist/` is the location of built JavaScript blocks, named with the same name as you add the block with using `add_block()`.
@@ -103,9 +108,22 @@ The trait assumes the following folder structure:
 `languages/` is the location of the translation files. The handle and domain are both set to `{$block_prefix}-{$block_name}`.
 
 # Required Methods
+
 The trait relies on four methods to be implemented, outside of `blocks()`. These are:
 
-- `get_version()` that should return a string of the current plugin version. Used for versioning the blocks.
-- `get_url()` should return the URL to the plugin directory.
-- `get_path()` should return the path to the plugin directory.
-- `get_textdomain()` should return the plugin textdomain.
+-   `get_version()` that should return a string of the current plugin version. Used for versioning the blocks.
+-   `get_url()` should return the URL to the plugin directory.
+-   `get_path()` should return the path to the plugin directory.
+-   `get_textdomain()` should return the plugin textdomain.
+
+# Hooks & Filters
+
+We strive to make all code easily customizable with plenty of filters and hooks as needed. You never know when or why you might need that simple one-off customization.
+
+Since this is a composer package, filters are housed inside of the "package namespace" and do not inherit the consumer plugin's own naming structure.
+
+## Filters
+
+`bm_block_support_{$BLOCKNAME}_attributes`. Available for any dynamic block that extends `Block` and is reliant on `Block::$name` being set in the consuming dynamic block class. Allows you to customize the specific block attributes.
+
+`bm_block_support_{$BLOCKNAME}_wrapper_args`. Available for any dynamic block that extends `Block` and is reliant on `Block::$name` being set in the consuming dynamic block class. Allows you to customize the args sent to `get_block_wrapper_attributes`.

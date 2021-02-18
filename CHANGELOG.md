@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.4.0] - 2021-02-18
+
+### Added
+
+-   Filters for dynamic blocks in `class Block`. This relies on the new `Blocks::$name` property being set for a block. With them you can extend attributes and block wrapper args. See more in the README.
+
 ## [1.3.2] - 2021-01-29
 
 ## Changed
