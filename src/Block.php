@@ -35,7 +35,7 @@ abstract class Block {
 	 * @return array
 	 */
 	public static function get_attributes() {
-		return apply_filters( 'block_support_' . static::$name . '_attributes', static::$attributes );
+		return apply_filters( 'bm_block_support_' . static::$name . '_attributes', static::$attributes );
 	}
 
 	/**
@@ -75,7 +75,7 @@ abstract class Block {
 			$args['class'] = implode( ' ', $classes );
 		}
 
-		$args = apply_filters( 'block_support_' . static::$name . '_wrapper_attributes', $args );
+		$args = apply_filters( 'bm_block_support_' . static::$name . '_wrapper_attributes', $args );
 
 		return get_block_wrapper_attributes( $args );
 	}
