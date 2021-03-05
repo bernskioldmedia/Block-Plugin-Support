@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.4.1] - 2021-03-05
+
+### Fixed
+
+-   In the section class, the attributes filter was not being applied correctly.
+
 ## [1.4.0] - 2021-02-18
 
 ### Added

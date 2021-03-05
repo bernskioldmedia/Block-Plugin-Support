@@ -121,7 +121,9 @@ abstract class Section extends Block {
 	 * @return array
 	 */
 	public static function get_attributes() {
-		return array_merge( static::$section_attributes, static::$attributes );
+		$attributes = array_merge( static::$section_attributes, static::$attributes );
+
+		return apply_filters( 'bm_block_support_' . static::$name . '_attributes', $attributes );
 	}
 
 	/**
