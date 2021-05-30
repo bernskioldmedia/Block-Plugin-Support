@@ -231,10 +231,8 @@ abstract class Section extends Block {
 			$styles[] = 'background-position: ' . static::focalpoint_to_background_position( $attributes['backgroundImageFocalPoint'] ) . ';';
 		}
 
-		$args = [
-			'class' => implode( ' ', $classes ),
-			'style' => implode( ' ', $styles ),
-		];
+		$args['class'] = \implode(' ', $classes);
+	    	$args['style'] = \implode(' ', $styles);
 
 		$wrapper_attributes = static::get_block_wrapper_attributes( $attributes, $args );
 

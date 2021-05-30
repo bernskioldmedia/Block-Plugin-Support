@@ -4,11 +4,17 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
-## [1.4.2] - 2021-05-30
+## [1.4.3] - 2021-05-30
 
 ### Added
 
 -   Support for PHP 8.
+
+## [1.4.2] - 2021-05-06
+
+### Fixed
+
+-   Anchor wasn't being applied to section wrappers
 
 ## [1.4.1] - 2021-03-05
 
