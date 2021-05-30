@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.4.2] - 2021-05-30
+
+### Added
+
+-   Support for PHP 8.
+
 ## [1.4.1] - 2021-03-05
 
 ### Fixed
