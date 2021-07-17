@@ -3,7 +3,7 @@
   "description": "A reusable way of adding block support to a WordPress plugin.",
   "type": "library",
   "require": {
-	"php": "^7.1|^8.0"
+	"php": "^7.4|^8.0"
   },
   "license": "MIT",
   "authors": [

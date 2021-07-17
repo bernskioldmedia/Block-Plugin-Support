@@ -12,29 +12,23 @@ abstract class Block {
 	/**
 	 * By entering the block name here, we can expose a few filters
 	 * that makes customization easier.
-	 *
-	 * @var string
 	 */
-	protected static $name = '';
+	protected static string $name = '';
 
 	/**
 	 * An array of attributes that will be registered with
 	 * the block in PHP.
 	 * Each block that extends this class ought to set the
 	 * attributes here too.
-	 *
-	 * @var array
 	 */
-	protected static $attributes = [];
+	protected static array $attributes = [];
 
 	/**
 	 * Get the full array of merged attributes.
 	 * Call this method when registering the block
 	 * to make the attributes available for use.
-	 *
-	 * @return array
 	 */
-	public static function get_attributes() {
+	public static function get_attributes(): array {
 		return apply_filters( 'bm_block_support_' . static::$name . '_attributes', static::$attributes );
 	}
 
@@ -44,11 +38,8 @@ abstract class Block {
 	 *
 	 * Hopefully we can sunset it in the future with a version check,
 	 * when 5.7 lands...
-	 *
-	 * @return string
 	 */
-	public static function get_block_wrapper_attributes( $attributes, array $args ): string {
-
+	public static function get_block_wrapper_attributes( array $attributes, array $args ): string {
 		$background_color = static::get_attr_value( $attributes, 'backgroundColor' );
 		$gradient         = static::get_attr_value( $attributes, 'gradient' );
 		$text_color       = static::get_attr_value( $attributes, 'textColor' );
@@ -88,12 +79,9 @@ abstract class Block {
 	 * If not, we default to its default if it exists,
 	 * otherwise to null.
 	 *
-	 * @param  array   $attributes
-	 * @param  string  $name
-	 *
 	 * @return mixed|null
 	 */
-	protected static function get_attr_value( $attributes, $name ) {
+	protected static function get_attr_value( array $attributes, string $name ) {
 		return $attributes[ $name ] ?? null;
 	}
 
@@ -102,10 +90,6 @@ abstract class Block {
 	 * in the class that's extending this, when registering the block.
 	 *
 	 * Automatically adds the blocks' content in the right place.
-	 *
-	 * @param  array  $attributes
-	 *
-	 * @return string
 	 */
-	abstract public static function render( $attributes );
+	abstract public static function render( array $attributes ): string;
 }
