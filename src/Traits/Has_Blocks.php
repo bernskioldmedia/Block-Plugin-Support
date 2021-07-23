@@ -58,6 +58,9 @@ trait Has_Blocks {
 			} else {
 				register_block_type( $directory );
 			}
+
+			// Load translations.
+			wp_set_script_translations( 'bm-block-' . $name, 'bm-block-library', static::get_path( 'languages/' ) );
 		}
 	}
 
