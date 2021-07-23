@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [2.0.0] - 2021-07-23
+
+### Changed
+
+- Upgraded block loading mechanism to support the updated Block API. This is a breaking change.
+- Attributes are no longer defined in dynamic block classes but read from block.json.
+
 ## [1.4.4] - 2021-07-14
 
 ### Changed
