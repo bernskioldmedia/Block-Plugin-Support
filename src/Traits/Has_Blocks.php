@@ -40,10 +40,10 @@ trait Has_Blocks {
 			}
 
 			// Get the asset file data.
-			$asset_meta = include static::get_path() . 'dist/' . $name . '.asset.php';
+			$asset_meta = include static::get_path() . 'dist/blocks/' . $name . '.asset.php';
 
 			// Register the script with WordPress.
-			wp_register_script( 'bm-block-' . $name, static::get_url( 'dist/' . $name . '.js' ), $asset_meta['dependencies'], $asset_meta['version'], true );
+			wp_register_script( 'bm-block-' . $name, static::get_url( 'dist/blocks/' . $name . '.js' ), $asset_meta['dependencies'], $asset_meta['version'], true );
 
 			// Register the block. Dynamic blocks get their callback.
 			if ( isset( static::$dynamic_blocks[ $name ] ) ) {
