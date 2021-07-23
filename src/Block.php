@@ -16,23 +16,6 @@ abstract class Block {
 	protected static string $name = '';
 
 	/**
-	 * An array of attributes that will be registered with
-	 * the block in PHP.
-	 * Each block that extends this class ought to set the
-	 * attributes here too.
-	 */
-	protected static array $attributes = [];
-
-	/**
-	 * Get the full array of merged attributes.
-	 * Call this method when registering the block
-	 * to make the attributes available for use.
-	 */
-	public static function get_attributes(): array {
-		return apply_filters( 'bm_block_support_' . static::$name . '_attributes', static::$attributes );
-	}
-
-	/**
 	 * This is a wrapper around get_block_wrapper_attributes()
 	 * in core, to fix some of the bugs they've introduced.
 	 *
