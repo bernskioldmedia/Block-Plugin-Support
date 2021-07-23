@@ -50,6 +50,11 @@ trait Has_Blocks {
 				register_block_type( $directory, [
 					'render_callback' => [ static::$dynamic_blocks[ $name ], 'render' ],
 				] );
+
+				// If we have additional metadata to load, load it.
+				if ( method_exists( static::$dynamic_blocks[ $name ], 'add_metadata' ) ) {
+					add_filter( 'block_type_metadata', [ static::$dynamic_blocks[ $name ], 'add_metadata' ] );
+				}
 			} else {
 				register_block_type( $directory );
 			}
