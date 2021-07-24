@@ -60,7 +60,7 @@ trait Has_Blocks {
 			}
 
 			// Load translations.
-			wp_set_script_translations( 'bm-block-' . $name, 'bm-block-library', static::get_path( 'languages/' ) );
+			wp_set_script_translations( 'bm-block-' . $name, static::get_textdomain(), static::get_path( 'languages/' ) );
 		}
 	}
 
@@ -75,4 +75,9 @@ trait Has_Blocks {
 	 * file relative to the plugin folder home.
 	 */
 	abstract public static function get_path( string $file = '' ): string;
+
+	/**
+	 * Get the textdomain for the plugin.
+	 */
+	abstract public static function get_textdomain(): string;
 }
