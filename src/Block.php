@@ -10,6 +10,11 @@ namespace BernskioldMedia\WP\Block_Plugin_Support;
 abstract class Block {
 
 	/**
+	 * The name of the block with prefix, such a bm/block-name.
+	 */
+	protected static string $block_name = '';
+
+	/**
 	 * By entering the block name here, we can expose a few filters
 	 * that makes customization easier.
 	 */
