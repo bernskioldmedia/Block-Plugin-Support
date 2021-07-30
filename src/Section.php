@@ -114,10 +114,13 @@ abstract class Section extends Block {
 	/**
 	 * Adds the section metadata.
 	 */
-	public static function add_metadata( array $metadata ): array {
-		$metadata['attributes'] = array_merge( $metadata['attributes'], static::$section_attributes );
+	public static function add_metadata( array $settings, array $metadata ): array {
+		if ( static::$block_name !== $metadata['name'] ) {
+			return $settings;
+		}
+		$settings['attributes'] = \array_merge( $settings['attributes'] ?? [], static::$section_attributes );
 
-		return $metadata;
+		return $settings;
 	}
 
 	/**

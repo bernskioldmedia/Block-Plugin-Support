@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [2.0.3] - 2021-07-30
+
+### Fixed
+
+- Fixed issue where metadata wasn't being properly appended.
+
+## [2.0.2] - 2021-07-24
+
+### Fixed
+
+- Fixed issue where array doesn't exist before filtering.
+
 ## [2.0.1] - 2021-07-24
 
 ### Fixed

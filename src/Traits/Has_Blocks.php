@@ -49,7 +49,7 @@ trait Has_Blocks {
 			if ( isset( static::$dynamic_blocks[ $name ] ) ) {
 				// If we have additional metadata to load, load it.
 				if ( method_exists( static::$dynamic_blocks[ $name ], 'add_metadata' ) ) {
-					add_filter( 'block_type_metadata', [ static::$dynamic_blocks[ $name ], 'add_metadata' ] );
+					add_filter( 'block_type_metadata_settings', [ static::$dynamic_blocks[ $name ], 'add_metadata' ], 10, 2 );
 				}
 
 				register_block_type( $directory, [
