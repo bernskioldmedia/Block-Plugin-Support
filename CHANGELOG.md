@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [2.1.0] - 2021-09-22
+
+### Changed
+
+- Now allows registering of a custom block prefix instead of the default `bm`.
+
 ## [2.0.3] - 2021-07-30
 
 ### Fixed

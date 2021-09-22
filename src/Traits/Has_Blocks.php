@@ -8,8 +8,9 @@ namespace BernskioldMedia\WP\Block_Plugin_Support\Traits;
  * Designed to extend a core plugin file that is a plugin
  * that provides blocks for output.
  *
- * @property array $conditional_blocks An array of blocks that are only loaded if the corresponding class name exists. blockname => classname.
- * @property array $dynamic_blocks An array of blocks that are dynamic, meaning they use PHP to load on the frontend. blockname => classname.
+ * @property array  $conditional_blocks An array of blocks that are only loaded if the corresponding class name exists. blockname => classname.
+ * @property array  $dynamic_blocks     An array of blocks that are dynamic, meaning they use PHP to load on the frontend. blockname => classname.
+ * @property string $block_prefix       The prefix for all the blocks in this plugin.
  *
  * @package BernskioldMedia\WP\Block_Plugin_Support\Traits
  */
@@ -43,7 +44,8 @@ trait Has_Blocks {
 			$asset_meta = include static::get_path() . 'dist/blocks/' . $name . '.asset.php';
 
 			// Register the script with WordPress.
-			wp_register_script( 'bm-block-' . $name, static::get_url( 'dist/blocks/' . $name . '.js' ), $asset_meta['dependencies'], $asset_meta['version'], true );
+			wp_register_script( static::get_block_prefix() . '-block-' . $name, static::get_url( 'dist/blocks/' . $name . '.js' ), $asset_meta['dependencies'],
+				$asset_meta['version'], true );
 
 			// Register the block. Dynamic blocks get their callback.
 			if ( isset( static::$dynamic_blocks[ $name ] ) ) {
@@ -55,29 +57,28 @@ trait Has_Blocks {
 				register_block_type( $directory, [
 					'render_callback' => [ static::$dynamic_blocks[ $name ], 'render' ],
 				] );
-			} else {
+			}
+			else {
 				register_block_type( $directory );
 			}
 
 			// Load translations.
-			wp_set_script_translations( 'bm-block-' . $name, static::get_textdomain(), static::get_path( 'languages/' ) );
+			wp_set_script_translations( static::get_block_prefix() . '-block-' . $name, static::get_textdomain(), static::get_path( 'languages/' ) );
 		}
 	}
 
 	/**
-	 * Get the URL to the plugin folder, or the specified
-	 * file relative to the plugin folder home.
+	 * Get the prefix that we use when registering the blocks. To set your
+	 * own prefix, just define the protected static string $block_prefix property
+	 * on your base plugin class.
+	 *
+	 * @return string
 	 */
-	abstract public static function get_url( string $file = '' ): string;
+	protected static function get_block_prefix(): string {
+		if ( property_exists( static::class, 'block_prefix' ) ) {
+			return static::$block_prefix;
+		}
 
-	/**
-	 * Get the path to the plugin folder, or the specified
-	 * file relative to the plugin folder home.
-	 */
-	abstract public static function get_path( string $file = '' ): string;
-
-	/**
-	 * Get the textdomain for the plugin.
-	 */
-	abstract public static function get_textdomain(): string;
+		return 'bm';
+	}
 }

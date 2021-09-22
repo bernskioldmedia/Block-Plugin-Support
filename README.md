@@ -24,7 +24,25 @@ class My_Plugin {
 }
 ```
 
-# Required Folder Structure
+### Defining a custom block prefix
+The trait will default to using the 'bm' prefix for blocks. Blocks are named with a prefix to scope them to the project they are a part of. This also influences how the script and style handles are registered ($prefix-block-$block_name).
+
+Your project probably requires its custom prefix. You can set it on the main plugin class like so:
+
+```
+use BernskioldMedia\WP\Block_Plugin_Support\Traits\Has_Blocks;
+
+class My_Plugin {
+
+    use Has_Blocks;
+    
+    // Set my custom block prefix.
+    protected static string $block_prefix = 'my-prefix';
+
+}
+```
+
+## Required Folder Structure
 
 The trait assumes the following folder structure:
 
@@ -34,14 +52,15 @@ The trait assumes the following folder structure:
 
 `languages/` is the location of the translation files. The handle and domain are both set to `{$block_prefix}-{$block_name}`.
 
-# Required Methods
+## Required Methods
 
 The trait relies on two methods to be implemented.
 
 - `get_url()` should return the URL to the plugin directory.
 - `get_path()` should return the path to the plugin directory.
+- `get_textdomain()` should return the string plugin textdomain.
 
-# Hooks & Filters
+## Hooks & Filters
 
 We strive to make all code easily customizable with plenty of filters and hooks as needed. You never know when or why you might need that simple one-off customization.
 
