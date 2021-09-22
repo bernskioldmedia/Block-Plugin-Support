@@ -1,3 +1,6 @@
+** THIS REPOSITORY WILL GO INTO READ-ONLY MODE **
+We have integrated this composer package into our wp-plugin-base instead of keeping it separate.
+
 # Block Plugin Support
 
 We find ourselves increasingly creating a bunch of plugins that add one or more blocks to the block editor.
