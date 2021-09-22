@@ -1,4 +1,5 @@
-** THIS REPOSITORY WILL GO INTO READ-ONLY MODE **
+**THIS REPOSITORY WILL GO INTO READ-ONLY MODE**
+
 We have integrated this composer package into our wp-plugin-base instead of keeping it separate.
 
 # Block Plugin Support
