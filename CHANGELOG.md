@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [2.1.1] - 2022-05-03
+
+### Fixed
+
+- Fixed the right type for sectionHeaderStyle
+
 ## [2.1.0] - 2021-09-22
 
 ### Changed
