@@ -65,7 +65,7 @@ abstract class Section extends Block {
 			'default' => false,
 		],
 		'sectionHeaderStyle'        => [
-			'type'    => 'text',
+			'type'    => 'string',
 			'default' => 'normal',
 		],
 		'sectionEyebrow'            => [
